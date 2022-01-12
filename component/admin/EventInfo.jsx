@@ -1,63 +1,86 @@
 import { useRef, useState, useEffect } from "react";
+import LocationInput from "./LocationInput";
 
-
-export default function EventInfo ({ eventDetails, setEventDetails , eventDetailsError , setEventDetailsError }) {
+export default function EventInfo({
+  eventDetails,
+  setEventDetails,
+  eventDetailsError,
+  setEventDetailsError
+}) {
   const [fileName, setFileName] = useState("");
   const ref = useRef();
-  const [pimg, setPimg] = useState('')
+  const [pimg, setPimg] = useState("");
   const imageUploadHandler = async (e) => {
     const imageFile = e.target.files[0];
-        setPimg(imageFile)
-        setFileName(imageFile.name);
-        setEventDetails((prev) => ({ ...prev, eventImage: imageFile }));
+    setPimg(imageFile);
+    setFileName(imageFile.name);
+    setEventDetails((prev) => ({ ...prev, eventImage: imageFile }));
   };
 
-  const eventNameValidation  = (e) => {
-      if(e.target.value === "") {
-        setEventDetailsError(prev => ({...prev , eventNameError : "Enter Event Name"}))
-      } else {
-        setEventDetailsError(prev => ({...prev , eventNameError : ""}))
-      }
-  }
+  const eventNameValidation = (e) => {
+    if (e.target.value === "") {
+      setEventDetailsError((prev) => ({
+        ...prev,
+        eventNameError: "Enter Event Name"
+      }));
+    } else {
+      setEventDetailsError((prev) => ({ ...prev, eventNameError: "" }));
+    }
+  };
 
   const eventLocationValidation = (e) => {
-    if(e.target.value === "") {
-      setEventDetailsError(prev => ({...prev , eventLocationError : "Enter Event Details"}))
+    if (e.target.value === "") {
+      setEventDetailsError((prev) => ({
+        ...prev,
+        eventLocationError: "Enter Event Details"
+      }));
     } else {
-      setEventDetailsError(prev => ({...prev , eventLocationError : ""}))
+      setEventDetailsError((prev) => ({ ...prev, eventLocationError: "" }));
     }
-  }
+  };
 
   const eventDescriptionValidation = (e) => {
-    if(e.target.value === "") {
-      setEventDetailsError(prev => ({...prev , eventDescriptionError : "Enter Event Description"}))
+    if (e.target.value === "") {
+      setEventDetailsError((prev) => ({
+        ...prev,
+        eventDescriptionError: "Enter Event Description"
+      }));
     } else {
-      setEventDetailsError(prev => ({...prev , eventDescriptionError : ""}))
+      setEventDetailsError((prev) => ({ ...prev, eventDescriptionError: "" }));
     }
-  }
+  };
 
   const eventLinkValidation = (e) => {
-    if(e.target.value === "") {
-      setEventDetailsError(prev => ({...prev , eventLinkError : "Enter Event Link"}))
+    if (e.target.value === "") {
+      setEventDetailsError((prev) => ({
+        ...prev,
+        eventLinkError: "Enter Event Link"
+      }));
     } else {
-      setEventDetailsError(prev => ({...prev , eventLinkError : ""}))
+      setEventDetailsError((prev) => ({ ...prev, eventLinkError: "" }));
     }
-  }
+  };
 
   const eventDateValidation = (e) => {
-    if(e.target.value === "") {
-      setEventDetailsError(prev => ({...prev , eventDateError : "Enter Event Date"}))
+    if (e.target.value === "") {
+      setEventDetailsError((prev) => ({
+        ...prev,
+        eventDateError: "Enter Event Date"
+      }));
     } else {
-      setEventDetailsError(prev => ({...prev , eventDateError : ""}))
+      setEventDetailsError((prev) => ({ ...prev, eventDateError: "" }));
     }
-  }
+  };
   const eventTimeValidation = (e) => {
-    if(e.target.value === "") { 
-      setEventDetailsError(prev => ({...prev , eventTimeError : "Enter Event Time"}))
+    if (e.target.value === "") {
+      setEventDetailsError((prev) => ({
+        ...prev,
+        eventTimeError: "Enter Event Time"
+      }));
     } else {
-          setEventDetailsError(prev => ({...prev , eventTimeError : ""}))
-        }
-      }
+      setEventDetailsError((prev) => ({ ...prev, eventTimeError: "" }));
+    }
+  };
 
   return (
     <div className="mx-10 mb-8">
@@ -85,11 +108,13 @@ export default function EventInfo ({ eventDetails, setEventDetails , eventDetail
                 eventName: e.target.value
               }))
             }
-            onBlur = {(e) => eventNameValidation(e)}
+            onBlur={(e) => eventNameValidation(e)}
           />
-          {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                          {eventDetailsError.eventNameError}
-                        </span>}
+          {
+            <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+              {eventDetailsError.eventNameError}
+            </span>
+          }
         </div>
         <div className="flex flex-col w-full ml-3">
           <label
@@ -98,23 +123,15 @@ export default function EventInfo ({ eventDetails, setEventDetails , eventDetail
           >
             Event Location
           </label>
-          <input
-            type="text"
-            className="bg-gray-100 p-4 rounded border-grayBorder border-2"
-            name="event location"
-            placeholder="Paste location here"
-            value={eventDetails.eventLocation}
-            onBlur = {(e) => eventLocationValidation(e)}
-            onChange={(e) =>
-              setEventDetails((prev) => ({
-                ...prev,
-                eventLocation: e.target.value
-              }))
-            }
+          <LocationInput
+            eventDetails={eventDetails}
+            setEventDetails={setEventDetails}
           />
-          {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                          {eventDetailsError.eventLocationError}
-                        </span>}
+          {
+            <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+              {eventDetailsError.eventLocationError}
+            </span>
+          }
         </div>
       </div>
       <div className="flex flex-col w-full mb-4">
@@ -125,10 +142,10 @@ export default function EventInfo ({ eventDetails, setEventDetails , eventDetail
           type="text"
           className="bg-gray-100 p-4 rounded border-grayBorder border-2 resize-none"
           name="description"
-          placeholder = "Add description here"
+          placeholder="Add description here"
           rows="4"
           value={eventDetails.eventDescription}
-          onBlur = {(e) => eventDescriptionValidation(e)}
+          onBlur={(e) => eventDescriptionValidation(e)}
           onChange={(e) =>
             setEventDetails((prev) => ({
               ...prev,
@@ -136,9 +153,11 @@ export default function EventInfo ({ eventDetails, setEventDetails , eventDetail
             }))
           }
         />
-        {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                          {eventDetailsError.eventDescriptionError}
-                        </span>}
+        {
+          <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+            {eventDetailsError.eventDescriptionError}
+          </span>
+        }
       </div>
       <div className="flex flex-col w-full mb-4">
         <label className="mb-2 text-sm font-semibold" htmlFor="event link">
@@ -150,14 +169,16 @@ export default function EventInfo ({ eventDetails, setEventDetails , eventDetail
           name="event link"
           placeholder="Link Here"
           value={eventDetails.eventLink}
-          onBlur = {(e) => eventLinkValidation(e)}
+          onBlur={(e) => eventLinkValidation(e)}
           onChange={(e) =>
             setEventDetails((prev) => ({ ...prev, eventLink: e.target.value }))
           }
         />
-        {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                          {eventDetailsError.eventLinkError}
-                        </span>}
+        {
+          <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+            {eventDetailsError.eventLinkError}
+          </span>
+        }
       </div>
       <div className="flex justify-center item-center mb-5">
         <div className="flex flex-col w-full mr-3">
@@ -167,11 +188,11 @@ export default function EventInfo ({ eventDetails, setEventDetails , eventDetail
           <input
             type="date"
             className="bg-gray-100 p-4 rounded border-grayBorder border-2"
-            min={new Date().toISOString().split('T')[0]}
+            min={new Date().toISOString().split("T")[0]}
             name="event date"
             placeholder="choose"
             value={eventDetails.eventDate}
-            onBlur = {(e) => eventDateValidation(e)}
+            onBlur={(e) => eventDateValidation(e)}
             onChange={(e) =>
               setEventDetails((prev) => ({
                 ...prev,
@@ -179,9 +200,11 @@ export default function EventInfo ({ eventDetails, setEventDetails , eventDetail
               }))
             }
           />
-          {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                          {eventDetailsError.eventDateError}
-                        </span>}
+          {
+            <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+              {eventDetailsError.eventDateError}
+            </span>
+          }
         </div>
         <div className="flex flex-col w-full ml-3">
           <label className="mb-2 text-sm font-semibold" htmlFor="event time">
@@ -193,7 +216,7 @@ export default function EventInfo ({ eventDetails, setEventDetails , eventDetail
             name="event time"
             placeholder="choose"
             value={eventDetails.eventTime}
-            onBlur = {(e) => eventTimeValidation(e)}
+            onBlur={(e) => eventTimeValidation(e)}
             onChange={(e) =>
               setEventDetails((prev) => ({
                 ...prev,
@@ -201,9 +224,11 @@ export default function EventInfo ({ eventDetails, setEventDetails , eventDetail
               }))
             }
           />
-          {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                          {eventDetailsError.eventTimeError}
-                        </span>}
+          {
+            <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+              {eventDetailsError.eventTimeError}
+            </span>
+          }
         </div>
       </div>
       <div
@@ -211,7 +236,11 @@ export default function EventInfo ({ eventDetails, setEventDetails , eventDetail
         onClick={() => ref.current.click()}
       >
         <label htmlFor="inputFiles" className="font-bold relative">
-          {eventDetails?.eventImage === "" ? "Upload Image" : eventDetails?.eventImage?.name ? eventDetails?.eventImage?.name : eventDetails?.eventImage?.split('/')[6]}          
+          {eventDetails?.eventImage === ""
+            ? "Upload Image"
+            : eventDetails?.eventImage?.name
+            ? eventDetails?.eventImage?.name
+            : eventDetails?.eventImage?.split("/")[6]}
           <input
             type="file"
             className="hidden absolute top-0 left-0 w-full flex-grow"
@@ -223,9 +252,11 @@ export default function EventInfo ({ eventDetails, setEventDetails , eventDetail
           />
         </label>
       </div>
-      {<span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
-                          {eventDetailsError.eventImageError}
-                        </span>}
+      {
+        <span className="flex items-center font-bold tracking-wide text-red-danger text-xs mt-1 ml-0">
+          {eventDetailsError.eventImageError}
+        </span>
+      }
     </div>
   );
-};
+}
